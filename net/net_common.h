@@ -3,6 +3,24 @@
 #include <deque>
 #include <mutex>
 
+#pragma once
+// #ifndef NET_COMMON_H
+// #define NET_COMMON_H
+
+#define DEFAULT_IP "127.0.0.1"
+#define DEFAULT_PORT 4444
+
+enum Move_Direction : uint32_t {
+    Up=0,
+    Down=1,
+    Left=2,
+    Right=3
+};
+
+enum Msg_type : uint32_t {
+    MOVE_PLAYER = 44
+};
+
 class Msg;
 
 class Fifo {
@@ -27,12 +45,18 @@ class Msg {
     void update_size(void);
 
     public:
-    Msg();
+    Msg(void);
+    Msg(uint32_t);
     friend Msg& operator<<(Msg&, const uint32_t);
-    uint32_t get_size(void);
-    uint32_t get_type(void);
+    friend std::ostream& operator<< (std::ostream&, Msg&);
+    uint32_t get_size(void) const;
+    uint32_t get_type(void) const;
     uint32_t* ptr_to_body(void);
 };
 
-Msg raw_to_msg_parser();
+Msg raw_to_msg_parser(uint32_t*);
 void msg_to_raw_parser(uint32_t*, Msg&);
+
+
+
+// #endif // NET_COMMON_H

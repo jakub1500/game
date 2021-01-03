@@ -1,24 +1,26 @@
-#include <boost/asio.hpp>
-#include <vector>
-#include <thread>
+#include <cstdint>
 #include <string>
+#include <boost/asio.hpp>
 #include "net_common.h"
 #include "net_session.h"
 
-class NetServer {
+class NetClient {
+    std::string ip;
     uint16_t port;
     boost::asio::io_context context;
     boost::system::error_code error_code;
     boost::asio::ip::tcp::endpoint endpoint;
     boost::asio::ip::tcp::socket socket;
-    boost::asio::ip::tcp::acceptor acceptor;
     std::thread thr_context;
 
-    void accept_connection(void);
+    void connect(void);
 
     public:
-    std::vector<Session*> sessions_holder;
-    NetServer(void);
-    NetServer(uint16_t port);
-    ~NetServer();
+    Session* sessions_holder;
+    NetClient(void);
+    NetClient(std::string);
+    NetClient(uint16_t);
+    NetClient(std::string, uint16_t);
+    ~NetClient();
+
 };

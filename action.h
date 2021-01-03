@@ -1,19 +1,16 @@
-enum Move_Direction {
-    Up=0,
-    Down=1,
-    Left=2,
-    Right=3
-};
+#include "net/net_session.h"
 
 class Action {
+    Session* session;
     public:
+    Action(Session*);
     void move(Move_Direction);
 };
 
 class KeyStrokeEngine {
-    Action a;
+    Action action;
     public:
-    KeyStrokeEngine(void);
+    KeyStrokeEngine(Session*);
     void run(void);
 };
 

@@ -6,11 +6,7 @@
 
 using namespace std::chrono_literals;
 
-Field::Field(void) : x(' '){}
 
-char Field::get_char(void) {
-    return x;
-}
 
 Board::Board(unsigned int _x_size, unsigned int _y_size) : x_size(_x_size), y_size(_y_size) {
     fields = new Field*[x_size];
@@ -39,8 +35,8 @@ Screen::Screen(void) : exit(false), board(70,30) {
     noecho();
     thr_screen = std::thread([&]{
         while(!exit) {
-            clear();
-            print();
+            // clear();
+            // print();
             std::this_thread::sleep_for(30ms);
         }
     });
@@ -62,7 +58,7 @@ void Screen::print() {
                  print_simple("|");
             } else {
                 Field t_field = board.get_field_by_cords(j-1, i-1);
-                print_simple(std::string(1, t_field.x));
+                print_simple(std::string(1, t_field.get_image()));
             }
         }
         print_simple("\n");

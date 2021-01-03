@@ -1,13 +1,7 @@
 #include <thread>
+#include "world/field.h"
 
-class Field {
 
-    public:
-
-    char x;
-    Field();
-    char get_char(void);
-};
 
 class Board {
     unsigned int x,y;
