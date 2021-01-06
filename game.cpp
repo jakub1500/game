@@ -1,36 +1,46 @@
 #include "screen.h"
 #include "action.h"
-#include "net/net_client.h"
+#include "net/net_agent.h"
 #include <chrono>
 #include <iostream>
 #include "net/msg_processer.h"
 
 using namespace std::chrono_literals;
 
-void manage_session_loop(NetClient* nc, Msg_Processer_Client* processer) {
+void manage_session_loop(Session* session, Msg_Processer_Client* processer) {
     std::this_thread::sleep_for(1000ms);
     while(1){
-        Session* ses = nc->sessions_holder;
-        if (!ses) {
+        std::this_thread::sleep_for(1000ms);
+        if (!session) {
             continue;
         }
-        std::cout << "there is new session" << std::endl;
-        ses->run(*processer);
+        Msg msx(Msg_type::MOVE_PLAYER);
+        msx << 1;
+        session->out_fifo.push_element(std::move(msx));
+        session->run();
+        if (!session->in_fifo.is_fifo_empty()) {
+            std::cout << "there is new msg" << std::endl;
+            Msg msg = session->in_fifo.get_element();
+            std::cout << msg;
+            processer->process_msg(msg);
+        }
 
-        std::this_thread::sleep_for(1000ms);
     }
 }
 
 int main() {
-    NetClient nc;
+    Session* session = nullptr;
+    Net_Agent_Client nc(&session);
     Screen s;
-    Msg_Processer_Client msg_processer_client;
-    std::thread check_session_loop = std::thread(manage_session_loop, &nc, &msg_processer_client);
-
-    KeyStrokeEngine kse(nc.sessions_holder);
+    Msg_Processer_Client msg_processer_client(&s);
+    std::thread check_session_loop = std::thread(manage_session_loop, session, &msg_processer_client);
+    KeyStrokeEngine kse(session);
     kse.run();
 
     check_session_loop.join();
 
+    if(session) {
+        delete session;
+    }
     return 0;
 }

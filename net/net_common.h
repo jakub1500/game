@@ -18,7 +18,8 @@ enum Move_Direction : uint32_t {
 };
 
 enum Msg_type : uint32_t {
-    MOVE_PLAYER = 44
+    MOVE_PLAYER = 44,
+    NEW_BOARD
 };
 
 class Msg;
@@ -54,8 +55,7 @@ class Msg {
     uint32_t* ptr_to_body(void);
 };
 
-Msg raw_to_msg_parser(uint32_t*);
-void msg_to_raw_parser(uint32_t*, Msg&);
+
 
 
 

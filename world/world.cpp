@@ -71,3 +71,54 @@ bool Map::is_field_accessible(uint32_t x, uint32_t y){
 World::World(void) : map(new Map) {
     players.push_back(new Player);
 }
+
+World::~World() {
+    for (Player* player : players) {
+        delete player;
+    }
+}
+
+
+Msg World::make_board_for_player(void) {
+    Player* player = players.back();
+    uint32_t pos_x = player->get_pos_x();
+    uint32_t pos_y = player->get_pos_y();
+    char layour = player->get_layout();
+
+    uint32_t board_x_size = 5;//71;
+    uint32_t board_y_size = 5;//31;
+    uint32_t board_size = board_x_size*board_y_size;
+
+    char board[board_size];
+
+    Field field;
+    int i = 0;
+    for (int y = pos_y-(board_y_size/2); y <= pos_x+(board_y_size/2); y++) {
+        for (int x = pos_x-(board_x_size/2); x <= pos_x+(board_x_size/2); x++) {
+            field = map->get_field_by_cords(x,y);
+            board[i] = field.get_image();
+            i++;
+        }
+    }
+    Msg msg(Msg_type::NEW_BOARD);
+    int fulluint32 = (board_size)/sizeof(uint32_t);
+    int modulorest = (board_size)%sizeof(uint32_t);
+
+    for (int i = 0; i< fulluint32; i++) {
+        uint32_t new_val=0;
+        for (int j = 0; j<sizeof(uint32_t); j++) {
+            *(((char*)(&new_val))+j) = board[i*sizeof(uint32_t)+j];
+        }
+        msg << new_val;
+    }
+    uint32_t last=0;
+    for (int i = 0; i < modulorest; i++) {
+        *(((char*)(&last))+i) = board[board_size-modulorest+i];
+    }
+    if (modulorest > 0) {
+        msg << last;
+    } 
+
+    return msg; 
+
+}

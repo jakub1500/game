@@ -1,8 +1,10 @@
 #include "msg_processer.h"
 #include "net_common.h"
 #include "../world/world.h"
+#include <iostream>
 
-void Msg_Processer_Base::process_msg(Msg& msg) {}
+// void Msg_Processer_Base::process_msg(Msg& msg) {}
+// Msg& Msg_Processer_base::create_msg(void) {Msg msg; return msg;}
 
 Msg_Processer_Server::Msg_Processer_Server(World& _world) : world(&_world) {}
 
@@ -44,6 +46,19 @@ void Msg_Processer_Server::process_msg(Msg& msg) {
     }
 }
 
-Msg_Processer_Client::Msg_Processer_Client(void) {}
+Msg Msg_Processer_Server::create_msg(void) {Msg msg; return msg;}
+
+Msg_Processer_Client::Msg_Processer_Client(Screen* _screen) : screen(_screen) {}
 void Msg_Processer_Client::process_msg(Msg& msg) {
+    uint32_t type = msg.get_type();
+    
+    switch (type) {
+        case Msg_type::NEW_BOARD:
+
+            break;
+        default:
+            std::cout << "cannot handle message\n";
+            break;
+    }
 }
+Msg Msg_Processer_Client::create_msg(void) {Msg msg; return msg;}

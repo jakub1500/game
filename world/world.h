@@ -1,6 +1,7 @@
 #include "field.h"
 #include <vector>
 #include "player.h"
+#include "../net/net_common.h"
 
 #pragma once
 
@@ -27,4 +28,6 @@ class World {
     Map* map;
     std::vector<Player*> players;
     World(void);
+    ~World();
+    Msg make_board_for_player(void);
 };

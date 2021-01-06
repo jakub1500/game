@@ -1,7 +1,7 @@
 #include <thread>
 #include "world/field.h"
 
-
+#pragma once
 
 class Board {
     unsigned int x,y;
@@ -21,15 +21,16 @@ class Screen {
     unsigned int x_size;
     unsigned int y_size;
     std::thread thr_screen;
-    Board board;
     bool exit;
     char c;
     void print_simple(std::string text);
 
     public:
+    Board board;
     Screen(void);
     ~Screen();
 
     void print();
+    void show_board();
 
 };

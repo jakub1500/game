@@ -27,12 +27,12 @@ Field& Board::get_field_by_cords(unsigned int x, unsigned int y) {
     return *ptr;
 }
 
-Screen::Screen(void) : exit(false), board(70,30) {
+Screen::Screen(void) : exit(false), board(71,31) {
     x_size = 100;
-    y_size = 30;
-    initscr();
-    cbreak();
-    noecho();
+    y_size = 31;
+    // initscr();
+    // cbreak();
+    // noecho();
     thr_screen = std::thread([&]{
         while(!exit) {
             // clear();
@@ -66,4 +66,8 @@ void Screen::print() {
 }
 void Screen::print_simple(std::string text) {
     printw(text.c_str());
+}
+
+void Screen::show_board(void) {
+    
 }

@@ -63,19 +63,3 @@ uint32_t* Msg::ptr_to_body(void) {
     return body.data();
 }
 
-void msg_to_raw_parser(uint32_t* holder, Msg& msg_to_parse){
-    *holder = msg_to_parse.get_type();
-    *(holder+1) = msg_to_parse.get_size();
-    std::memcpy(holder+2, msg_to_parse.ptr_to_body(), msg_to_parse.get_size()*sizeof(uint32_t));
-}
-
-Msg raw_to_msg_parser(uint32_t* raw_msg) {
-    uint32_t type = *(raw_msg);
-    uint32_t size = *(raw_msg+1);
-    Msg msg(type);
-    for (int i = 2; i < size+2; i++) {
-        msg << *(raw_msg + i);
-    }
-    return msg;
-} 
-
