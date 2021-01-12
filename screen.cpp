@@ -3,10 +3,9 @@
 #include <chrono>
 #include <string>
 #include "screen.h"
+#include <iostream>
 
 using namespace std::chrono_literals;
-
-
 
 Board::Board(unsigned int _x_size, unsigned int _y_size) : x_size(_x_size), y_size(_y_size) {
     fields = new Field*[x_size];
@@ -27,19 +26,12 @@ Field& Board::get_field_by_cords(unsigned int x, unsigned int y) {
     return *ptr;
 }
 
-Screen::Screen(void) : exit(false), board(71,31) {
+Screen::Screen(void) : exit(false), board(41,21) {
     x_size = 100;
     y_size = 31;
-    // initscr();
-    // cbreak();
-    // noecho();
-    thr_screen = std::thread([&]{
-        while(!exit) {
-            // clear();
-            // print();
-            std::this_thread::sleep_for(30ms);
-        }
-    });
+    initscr();
+    cbreak();
+    noecho();
 };
 Screen::~Screen() {
     endwin();
@@ -68,6 +60,28 @@ void Screen::print_simple(std::string text) {
     printw(text.c_str());
 }
 
-void Screen::show_board(void) {
-    
+void Screen::show_board(Msg& msg) {
+    uint32_t board_size = board.x_size*board.y_size;
+    const char* lay = (char*)msg.ptr_to_body();
+
+    clear();
+
+    for (unsigned int i = 0; i < board.y_size + 2; i++) {
+        for (unsigned int j = 0; j < board.x_size + 2; j++) {
+            if ((i == 0 && (j == 0 || j == board.x_size + 1)) ||
+                ((i == board.y_size + 1 && (j == 0 || j == board.x_size + 1)))) {
+                print_simple("+");
+            } else if (i == 0 || i == board.y_size + 1) {
+                print_simple("-");
+            } else if (j == 0 || j == board.x_size + 1) {
+                 print_simple("|");
+            } else {
+                print_simple(std::string(1, *lay));
+                lay++;
+            }
+        }
+        print_simple("\n");
+    }
+    refresh();
+
 }

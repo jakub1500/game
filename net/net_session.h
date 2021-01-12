@@ -4,7 +4,7 @@
 
 #pragma once
 
-#define SESSION_READ_BUFFER_SIZE 4096
+#define SESSION_READ_BUFFER_SIZE 8196
 
 class Session {
     boost::asio::ip::tcp::socket socket;
@@ -13,6 +13,9 @@ class Session {
     void write(Msg&);
     void read(void);
     bool kill_session_trigger;
+    bool readyToRead;
+    unsigned int read_offset;
+    void process_incomming_data(std::size_t);
 
     public:
     Fifo in_fifo;
@@ -24,5 +27,5 @@ class Session {
 
 };
 
-Msg raw_to_msg_parser(uint32_t*);
+Msg raw_to_msg_parser(uint32_t*, std::size_t);
 uint32_t* msg_to_raw_parser(Msg&);

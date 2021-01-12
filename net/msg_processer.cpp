@@ -3,9 +3,6 @@
 #include "../world/world.h"
 #include <iostream>
 
-// void Msg_Processer_Base::process_msg(Msg& msg) {}
-// Msg& Msg_Processer_base::create_msg(void) {Msg msg; return msg;}
-
 Msg_Processer_Server::Msg_Processer_Server(World& _world) : world(&_world) {}
 
 void Msg_Processer_Server::move_player(Move_Direction direction) {
@@ -15,16 +12,16 @@ void Msg_Processer_Server::move_player(Move_Direction direction) {
 
     switch (direction){
         case Move_Direction::Up:
-            pos_x++;
-            break;
-        case Move_Direction::Down:
-            pos_x--;
-            break;
-        case Move_Direction::Left:
             pos_y--;
             break;
-        case Move_Direction::Right:
+        case Move_Direction::Down:
             pos_y++;
+            break;
+        case Move_Direction::Left:
+            pos_x--;
+            break;
+        case Move_Direction::Right:
+            pos_x++;
             break;
         default:
             return;
@@ -54,10 +51,11 @@ void Msg_Processer_Client::process_msg(Msg& msg) {
     
     switch (type) {
         case Msg_type::NEW_BOARD:
-
+                screen->show_board(msg);
+                // std::cout << "new map\n";
             break;
         default:
-            std::cout << "cannot handle message\n";
+            std::cout << "cannot handle message due to msg type "<< std::hex << type << "\n";
             break;
     }
 }

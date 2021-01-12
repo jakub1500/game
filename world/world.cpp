@@ -78,28 +78,44 @@ World::~World() {
     }
 }
 
+int lay_counter = 0;
+bool direction = true;
 
 Msg World::make_board_for_player(void) {
     Player* player = players.back();
     uint32_t pos_x = player->get_pos_x();
     uint32_t pos_y = player->get_pos_y();
-    char layour = player->get_layout();
+    char layout = player->get_layout();
 
-    uint32_t board_x_size = 5;//71;
-    uint32_t board_y_size = 5;//31;
+    uint32_t board_x_size = 41;
+    uint32_t board_y_size = 21;
     uint32_t board_size = board_x_size*board_y_size;
 
     char board[board_size];
 
     Field field;
     int i = 0;
-    for (int y = pos_y-(board_y_size/2); y <= pos_x+(board_y_size/2); y++) {
+    for (int y = pos_y-(board_y_size/2); y <= pos_y+(board_y_size/2); y++) {
         for (int x = pos_x-(board_x_size/2); x <= pos_x+(board_x_size/2); x++) {
             field = map->get_field_by_cords(x,y);
             board[i] = field.get_image();
             i++;
         }
     }
+    layout += lay_counter;
+    if (direction) {
+        lay_counter++;
+        if (lay_counter > 5) {
+            direction = false;
+        }
+    } else {
+        lay_counter--;
+        if (lay_counter < 0) {
+            direction = true;
+        }
+    }
+    board[i/2] = layout;
+
     Msg msg(Msg_type::NEW_BOARD);
     int fulluint32 = (board_size)/sizeof(uint32_t);
     int modulorest = (board_size)%sizeof(uint32_t);

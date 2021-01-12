@@ -7,8 +7,7 @@ Action::Action(void) {}
 Msg Action::move(Move_Direction direction) {
     Msg msg(Msg_type::MOVE_PLAYER);
     msg << direction;
-    return msg;
-    
+    return msg; 
 }
 
 KeyStrokeEngine::KeyStrokeEngine(Session* _session) : session(_session){}
@@ -19,7 +18,6 @@ void KeyStrokeEngine::run() {
     while(1)
     {
         c = getch();
-        std::cout << c << std::endl;
         Msg msg;
         if (c == 'w') {
             msg = action.move(Move_Direction::Up);
@@ -32,7 +30,6 @@ void KeyStrokeEngine::run() {
         } else {
             break;
         }
-        std::cout << msg;
         session->out_fifo.push_element(std::move(msg));
 
     }

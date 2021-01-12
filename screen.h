@@ -1,13 +1,12 @@
 #include <thread>
 #include "world/field.h"
+#include "net/net_common.h"
 
 #pragma once
 
 class Board {
     unsigned int x,y;
     Field** fields;
-
-    
 
     public:
     Field& get_field_by_cords(unsigned int x, unsigned int y);
@@ -30,7 +29,7 @@ class Screen {
     Screen(void);
     ~Screen();
 
-    void print();
-    void show_board();
+    void print(void);
+    void show_board(Msg&);
 
 };

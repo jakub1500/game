@@ -30,11 +30,10 @@ Msg::Msg(uint32_t _type) {
 }
 
 void Msg::update_size(void) {
-    head.size = body.size(); //* sizeof(uint32_t) + sizeof(Header);
+    head.size = body.size();
 }
 
 Msg& operator<<(Msg& in, const uint32_t part) {
-    // std::cout << "Adding " << part << std::endl;
     in.body.push_back(part);
     in.update_size();
     return in;

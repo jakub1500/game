@@ -4,8 +4,6 @@
 #include <mutex>
 
 #pragma once
-// #ifndef NET_COMMON_H
-// #define NET_COMMON_H
 
 #define DEFAULT_IP "127.0.0.1"
 #define DEFAULT_PORT 4444
@@ -54,9 +52,3 @@ class Msg {
     uint32_t get_type(void) const;
     uint32_t* ptr_to_body(void);
 };
-
-
-
-
-
-// #endif // NET_COMMON_H
