@@ -1,8 +1,8 @@
+#pragma once
+
 #include <thread>
 #include "world/field.h"
 #include "net/net_common.h"
-
-#pragma once
 
 class Board {
     unsigned int x,y;

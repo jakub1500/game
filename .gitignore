@@ -2,3 +2,4 @@ game
 server
 .vscode
 world.map
+build/

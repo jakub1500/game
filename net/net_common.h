@@ -1,9 +1,9 @@
+#pragma once
+
 #include <cstdint>
 #include <vector>
 #include <deque>
 #include <mutex>
-
-#pragma once
 
 #define DEFAULT_IP "127.0.0.1"
 #define DEFAULT_PORT 4444

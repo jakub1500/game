@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -5,8 +7,6 @@
 #include <boost/asio.hpp>
 #include "net_common.h"
 #include "net_session.h"
-
-#pragma once
 
 class Net_Agent_Base {
     protected:

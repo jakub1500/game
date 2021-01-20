@@ -1,8 +1,8 @@
-#include "../world/world.h"
-#include "net_common.h"
-#include "../screen.h"
-
 #pragma once
+
+#include "world/world.h"
+#include "net_common.h"
+#include "screen.h"
 
 class Msg_Processer_Base {
     public:

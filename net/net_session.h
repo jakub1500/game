@@ -1,8 +1,8 @@
+#pragma once
+
 #include "net_common.h"
 #include <boost/asio.hpp>
 #include "msg_processer.h"
-
-#pragma once
 
 #define SESSION_READ_BUFFER_SIZE 8196
 

@@ -1,6 +1,6 @@
 #include "msg_processer.h"
 #include "net_common.h"
-#include "../world/world.h"
+#include "world/world.h"
 #include <iostream>
 
 Msg_Processer_Server::Msg_Processer_Server(World& _world) : world(&_world) {}

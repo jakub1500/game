@@ -1,3 +1,5 @@
+#pragma once
+
 #include "net/net_session.h"
 
 class Action {

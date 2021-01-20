@@ -1,9 +1,10 @@
+#pragma once
+
 #include "field.h"
 #include <vector>
 #include "player.h"
-#include "../net/net_common.h"
+#include "net/net_common.h"
 
-#pragma once
 
 class Map {
     Field** field_map;

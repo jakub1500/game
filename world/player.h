@@ -1,7 +1,7 @@
+#pragma once
+
 #include <string>
 #include <cstdint>
-
-#pragma once
 
 class Player {
     std::string name;
