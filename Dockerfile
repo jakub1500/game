@@ -5,4 +5,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y build-essential cmake libncurs
 
 COPY . /opt/source
 
-ENTRYPOINT /bin/bash 
+RUN mkdir /opt/source/build && cd /opt/source/build && cmake .. && make
+
+ENTRYPOINT /opt/source/build/server

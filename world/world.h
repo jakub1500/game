@@ -4,6 +4,7 @@
 #include <vector>
 #include "player.h"
 #include "net/net_common.h"
+#include "protocol/protocol_msg.h"
 
 
 class Map {

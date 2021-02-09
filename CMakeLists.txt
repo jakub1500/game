@@ -1,47 +1,50 @@
-cmake_minimum_required(VERSION 3.11)
-project(MyProject VERSION 1.0.0)
+cmake_minimum_required(VERSION 3.12)
 
-add_library(
-    net
-    net/msg_processer.cpp
-    net/msg_processer.h
-    net/net_agent.cpp
-    net/net_agent.h
-    net/net_common.cpp
-    net/net_common.h
-    net/net_session.cpp
-    net/net_session.h
-)
+# Setup only C++ compiler for this project.
+project(MyProject
+        VERSION 1.0.0
+        LANGUAGES CXX)
+
+# Just for testing purpose
+variable_watch(DEBUG)
+set(DEBUG 1)
+message(WARNING "The value of debug is: ${DEBUG}")
+set(DEBUG 2)
+# --------------------------------
+
+set(IP \"127.0.0.1\")
+set(PORT 4444)
+
+add_subdirectory(net)
+add_subdirectory(processers)
+add_subdirectory(protocol)
 
 add_library(
     world
     world/field.cpp
-    world/field.h
     world/player.cpp
-    world/player.h
     world/world.cpp
-    world/world.h
 )
 
 add_executable(
     game
     game.cpp
     screen.cpp
-    screen.h
     action.cpp
-    action.h
 )
 
 add_executable(
     server
     server.cpp
-    screen.cpp
-    screen.h
 )
 
-find_package (Threads)
+# find_package (Threads)
 
-target_link_libraries(game PRIVATE net world ${CMAKE_THREAD_LIBS_INIT} ncurses)
-target_link_libraries(server PRIVATE net world ${CMAKE_THREAD_LIBS_INIT} ncurses)
+# target_link_libraries(game PRIVATE net world ${CMAKE_THREAD_LIBS_INIT} ncurses)
+# target_link_libraries(server PRIVATE net world ${CMAKE_THREAD_LIBS_INIT} ncurses)
+target_link_libraries(game PRIVATE net protocol world processer_game -pthread ncurses)
+target_link_libraries(server PRIVATE net protocol world processer_server -pthread)
+target_include_directories(processer_game PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(processer_server PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(net PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(world PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
