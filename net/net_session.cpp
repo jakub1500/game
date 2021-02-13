@@ -22,18 +22,17 @@ void Session::run(void) {
 }
 
 void Session::write(Msg& outMsg) {
-    uint32_t* out = Msg::msg_to_raw_parser(outMsg);
-    uint32_t raw_size = outMsg.get_size()*sizeof(uint32_t)+2*sizeof(uint32_t);
+    uint8_t buffer[8196];
+    Msg::msg_to_raw_parser(buffer, outMsg);
+    std::size_t raw_size = outMsg.get_size()*sizeof(uint32_t)+2*sizeof(uint32_t);
 
-    boost::asio::async_write(socket, boost::asio::buffer(out, raw_size),
+    boost::asio::async_write(socket, boost::asio::buffer(buffer, raw_size),
         [&](boost::system::error_code ec, std::size_t) {
         if (!ec) {
         } else {
             std::cout << "there is a problem " << ec.message() << " | " << ec.value() << std::endl;
         }
-
     });
-    delete out;
 }
 
 void Session::read(void) {
@@ -55,7 +54,7 @@ void Session::process_incomming_data(std::size_t length) {
         }
 
         // when there is full message in buffer we can process it
-        Msg msg = Msg::raw_to_msg_parser((uint32_t*)data);
+        Msg msg = Msg::raw_to_msg_parser(data);
         std::size_t bytes_msg_size = msg.get_size_in_bytes();
 
         in_fifo.push_element(std::move(msg));

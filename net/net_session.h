@@ -9,7 +9,7 @@
 
 class Session {
     boost::asio::ip::tcp::socket socket;
-    char data[SESSION_READ_BUFFER_SIZE];
+    uint8_t data[SESSION_READ_BUFFER_SIZE];
     void write(Msg&);
     void read(void);
     unsigned int read_offset;

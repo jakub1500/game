@@ -45,28 +45,26 @@ std::size_t Msg::get_size_in_bytes(void) const {
     return get_size()*sizeof(uint32_t)+sizeof(Header);
 }
 
-uint32_t* Msg::msg_to_raw_parser(Msg& msg_to_parse){
-    uint32_t* holder;
+void Msg::msg_to_raw_parser(uint8_t* buffer, Msg& msg_to_parse){
+    uint32_t* holder = (uint32_t*)buffer;
     uint32_t size = msg_to_parse.get_size();
-    holder = new uint32_t[size+2];
 
     *holder = msg_to_parse.get_type();
     *(holder+1) = size;
     std::memcpy(holder+2, msg_to_parse.ptr_to_body(), size*sizeof(uint32_t));
-    return holder;
 }
 
-Msg Msg::raw_to_msg_parser(uint32_t* raw_msg) {
-    uint32_t type = *(raw_msg);
-    uint32_t size = *(raw_msg+1);
+Msg Msg::raw_to_msg_parser(uint8_t* raw_msg) {
+    uint32_t type = *(uint32_t*)(raw_msg);
+    uint32_t size = *(((uint32_t*)raw_msg)+1);
     Msg msg(type);
     for (int i = 2; i < size+2; i++) {
-        msg << *(raw_msg + i);
+        msg << *(((uint32_t*)raw_msg) + i);
     }
     return msg;
 }
 
-bool Msg::check_if_full_msg_obtained(char* data, std::size_t read_bytes) {
+bool Msg::check_if_full_msg_obtained(uint8_t* data, std::size_t read_bytes) {
     // wait for full header
     if (read_bytes < sizeof(Header)) {
         return false;

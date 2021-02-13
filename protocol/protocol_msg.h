@@ -29,7 +29,7 @@ class Msg {
     uint32_t* ptr_to_body(void);
     std::size_t get_size_in_bytes(void) const;
 
-    static Msg raw_to_msg_parser(uint32_t*);
-    static bool check_if_full_msg_obtained(char*, std::size_t);
-    static uint32_t* msg_to_raw_parser(Msg&);
+    static Msg raw_to_msg_parser(uint8_t*);
+    static bool check_if_full_msg_obtained(uint8_t*, std::size_t);
+    static void msg_to_raw_parser(uint8_t*, Msg&);
 };
