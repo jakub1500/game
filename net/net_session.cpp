@@ -24,7 +24,7 @@ void Session::run(void) {
 void Session::write(Msg& outMsg) {
     uint8_t buffer[8196];
     Msg::msg_to_raw_parser(buffer, outMsg);
-    std::size_t raw_size = outMsg.get_size()*sizeof(uint32_t)+2*sizeof(uint32_t);
+    std::size_t raw_size = outMsg.get_size_in_bytes();
 
     boost::asio::async_write(socket, boost::asio::buffer(buffer, raw_size),
         [&](boost::system::error_code ec, std::size_t) {

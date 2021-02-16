@@ -3,6 +3,29 @@
 #include <cstring>
 
 #define PROTOCOL_MSG_TESTSUITE protocol_msg_testsuite
+#define PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE protocol_NetworkByteOrderConverter_testsuite
+
+TEST(PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE, conversion_to_network)
+{
+    uint32_t input = 0xdeadbabe;
+    uint32_t output = 0xbebaadde;
+    uint32_t test_output;
+
+    test_output = NetworkByteOrderConverter::convert_to_network(input);
+
+    ASSERT_EQ(output, test_output);
+}
+
+TEST(PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE, conversion_from_network)
+{
+    uint32_t input = 0xbebaadde;
+    uint32_t output = 0xdeadbabe;
+    uint32_t test_output;
+
+    test_output = NetworkByteOrderConverter::convert_from_network(input);
+
+    ASSERT_EQ(output, test_output);
+}
 
 TEST(PROTOCOL_MSG_TESTSUITE, basic_msg_creation)
 {
@@ -72,8 +95,8 @@ TEST(PROTOCOL_MSG_TESTSUITE, parse_raw_data_to_msg__empty_body)
 TEST(PROTOCOL_MSG_TESTSUITE, parse_raw_data_to_msg__one_item_body)
 {
     uint8_t raw_data[] = {0x41, 0x41, 0x41, 0x41,
-                        0x01, 0x00, 0x00, 0x00,
-                        0xbe, 0xba, 0xad, 0xde};
+                        0x00, 0x00, 0x00, 0x01,
+                        0xde, 0xad, 0xba, 0xbe};
     Msg msg = Msg::raw_to_msg_parser(raw_data);
 
     uint32_t type = msg.get_type();
@@ -103,8 +126,8 @@ TEST(PROTOCOL_MSG_TESTSUITE, parse_msg_to_raw_data__one_item_body)
 {
     const std::size_t buffer_size = 12;
     uint8_t raw_data[] = {0x41, 0x41, 0x41, 0x41,
-                        0x01, 0x00, 0x00, 0x00,
-                        0xbe, 0xba, 0xad, 0xde};
+                        0x00, 0x00, 0x00, 0x01,
+                        0xde, 0xad, 0xba, 0xbe};
     Msg msg;
     msg << 0xdeadbabe;
     uint8_t buffer[buffer_size];
@@ -156,7 +179,7 @@ TEST(PROTOCOL_MSG_TESTSUITE, check_if_full_msg_obtained__full_message)
 {
     const std::size_t buffer_size = 12;
     uint8_t raw_data[] = {0x41, 0x41, 0x41, 0x41,
-                        0x01, 0x00, 0x00, 0x00,
+                        0x00, 0x00, 0x00, 0x01,
                         0xbe, 0xba, 0xad, 0xde};
     bool result = Msg::check_if_full_msg_obtained(raw_data, buffer_size);
 
