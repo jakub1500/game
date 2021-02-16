@@ -1,7 +1,7 @@
 #include "protocol_msg.h"
 #include "cstring"
 
-uint32_t NetworkByteOrderConverter::convert_to_network(uint32_t in_val) {
+uint32_t Net_Byte_Order_Conv::convert_to_network(uint32_t in_val) {
     uint32_t ret_val = 0;
     uint8_t* ptr_ret_val = (uint8_t*)&ret_val;
 
@@ -12,7 +12,7 @@ uint32_t NetworkByteOrderConverter::convert_to_network(uint32_t in_val) {
 
     return ret_val;
 }
-uint32_t NetworkByteOrderConverter::convert_from_network(uint32_t in_val) {
+uint32_t Net_Byte_Order_Conv::convert_from_network(uint32_t in_val) {
     uint32_t ret_val = 0;
     uint8_t* ptr_in_val = (uint8_t*)&in_val;
 
@@ -73,20 +73,20 @@ void Msg::msg_to_raw_parser(uint8_t* buffer, Msg& msg_to_parse){
     uint32_t size = msg_to_parse.get_size();
     uint32_t* ptr_to_body = msg_to_parse.ptr_to_body();
 
-    *holder = NetworkByteOrderConverter::convert_to_network(msg_to_parse.get_type());
-    *(++holder) = NetworkByteOrderConverter::convert_to_network(size);
+    *holder = Net_Byte_Order_Conv::convert_to_network(msg_to_parse.get_type());
+    *(++holder) = Net_Byte_Order_Conv::convert_to_network(size);
 
     for (int i = 0; i < size; i++) {
-        *(++holder) = NetworkByteOrderConverter::convert_to_network(*(ptr_to_body+i));
+        *(++holder) = Net_Byte_Order_Conv::convert_to_network(*(ptr_to_body+i));
     }
 }
 
 Msg Msg::raw_to_msg_parser(uint8_t* raw_msg) {
-    uint32_t type = NetworkByteOrderConverter::convert_from_network(*(uint32_t*)(raw_msg));
-    uint32_t size = NetworkByteOrderConverter::convert_from_network(*(((uint32_t*)raw_msg)+1));
+    uint32_t type = Net_Byte_Order_Conv::convert_from_network(*(uint32_t*)(raw_msg));
+    uint32_t size = Net_Byte_Order_Conv::convert_from_network(*(((uint32_t*)raw_msg)+1));
     Msg msg(type);
     for (int i = 2; i < size+2; i++) {
-        msg << NetworkByteOrderConverter::convert_from_network(*(((uint32_t*)raw_msg) + i));
+        msg << Net_Byte_Order_Conv::convert_from_network(*(((uint32_t*)raw_msg) + i));
     }
     return msg;
 }
@@ -98,7 +98,7 @@ bool Msg::check_if_full_msg_obtained(uint8_t* data, std::size_t read_bytes) {
     }
 
     // now we know that we have full header
-    uint32_t msg_size = NetworkByteOrderConverter::convert_from_network(*(uint32_t*)(data+sizeof(Header::type)));
+    uint32_t msg_size = Net_Byte_Order_Conv::convert_from_network(*(uint32_t*)(data+sizeof(Header::type)));
     std::size_t full_message_size_in_bytes = msg_size*sizeof(uint32_t)+sizeof(Header);
     if (read_bytes < full_message_size_in_bytes) {
         return false;

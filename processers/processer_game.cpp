@@ -6,7 +6,7 @@ void Processer_Client::process_msg(Msg& msg) {
     uint32_t type = msg.get_type();
     
     switch (type) {
-        case Msg_type::NEW_BOARD:
+        case Msg_Type::NEW_BOARD:
                 screen->show_board(msg);
             break;
         default:
@@ -21,8 +21,8 @@ int Processer_Client::loop(void) {
     while(1) {
        for (Session* ses : *vec_sessions) {     
             ses->run();
-            if (!ses->in_fifo.is_fifo_empty()) {
-                Msg msg = ses->in_fifo.get_element();
+            if (ses->new_message_available()) {
+                Msg msg = ses->get_next_msg();
                 process_msg(msg);
             }
         }   

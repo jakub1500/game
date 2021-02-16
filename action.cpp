@@ -5,7 +5,7 @@
 Action::Action(void) {}
 
 Msg Action::move(Move_Direction direction) {
-    Msg msg(Msg_type::MOVE_PLAYER);
+    Msg msg(Msg_Type::MOVE_PLAYER);
     msg << direction;
     return msg; 
 }
@@ -30,7 +30,7 @@ void KeyStrokeEngine::run() {
         } else {
             break;
         }
-        session->out_fifo.push_element(std::move(msg));
+        session->send_msg(std::move(msg));
 
     }
 }

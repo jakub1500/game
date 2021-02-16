@@ -116,7 +116,7 @@ Msg World::make_board_for_player(void) {
     }
     board[i/2] = layout;
 
-    Msg msg(Msg_type::NEW_BOARD);
+    Msg msg(Msg_Type::NEW_BOARD);
     int fulluint32 = (board_size)/sizeof(uint32_t);
     int modulorest = (board_size)%sizeof(uint32_t);
 

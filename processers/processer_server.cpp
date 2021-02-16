@@ -35,7 +35,7 @@ void Processer_Server::move_player(Move_Direction direction) {
 void Processer_Server::process_msg(Msg& msg) {
     uint32_t type = msg.get_type();
     switch (type){
-        case Msg_type::MOVE_PLAYER:
+        case Msg_Type::MOVE_PLAYER:
             move_player((Move_Direction)*(msg.ptr_to_body()));
             break;
         default:
@@ -51,13 +51,13 @@ int Processer_Server::loop(void) {
         }
         for (Session* ses : *vec_sessions) {
             Msg msgx = world->make_board_for_player();
-            ses->out_fifo.push_element(std::move(msgx));
+            ses->send_msg(std::move(msgx));
             std::cout << "sending new map\n";
             ses->run();
-            if (ses->in_fifo.is_fifo_empty()) {
+            if (!ses->new_message_available()) {
                 continue;
             }
-            Msg msg = ses->in_fifo.get_element();
+            Msg msg = ses->get_next_msg();
             std::cout << msg;
             process_msg(msg);
         }   

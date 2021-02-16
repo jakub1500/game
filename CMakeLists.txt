@@ -18,6 +18,7 @@ set(PORT 4444)
 add_subdirectory(net)
 add_subdirectory(processers)
 add_subdirectory(protocol)
+add_subdirectory(actions)
 
 add_library(
     world
@@ -44,6 +45,8 @@ add_executable(
 # target_link_libraries(server PRIVATE net world ${CMAKE_THREAD_LIBS_INIT} ncurses)
 target_link_libraries(game PRIVATE net protocol world processer_game -pthread ncurses)
 target_link_libraries(server PRIVATE net protocol world processer_server -pthread)
+target_include_directories(action_game PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(action_server PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(processer_game PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(processer_server PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(net PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

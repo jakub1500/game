@@ -4,13 +4,13 @@
 #include <vector>
 #include <cstdint>
 
-class NetworkByteOrderConverter {
+class Net_Byte_Order_Conv {
     public:
     static uint32_t convert_to_network(uint32_t);
     static uint32_t convert_from_network(uint32_t);
 };
 
-enum Msg_type : uint32_t {
+enum Msg_Type : uint32_t {
     MOVE_PLAYER = 44,
     NEW_BOARD
 };

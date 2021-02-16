@@ -3,7 +3,7 @@
 #include <cstring>
 
 #define PROTOCOL_MSG_TESTSUITE protocol_msg_testsuite
-#define PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE protocol_NetworkByteOrderConverter_testsuite
+#define PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE protocol_Net_Byte_Order_Conv_testsuite
 
 TEST(PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE, conversion_to_network)
 {
@@ -11,7 +11,7 @@ TEST(PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE, conversion_to_network)
     uint32_t output = 0xbebaadde;
     uint32_t test_output;
 
-    test_output = NetworkByteOrderConverter::convert_to_network(input);
+    test_output = Net_Byte_Order_Conv::convert_to_network(input);
 
     ASSERT_EQ(output, test_output);
 }
@@ -22,7 +22,7 @@ TEST(PROTOCOL_NETWORK_BYTE_ORDER_CONVERSION_TESTSUITE, conversion_from_network)
     uint32_t output = 0xdeadbabe;
     uint32_t test_output;
 
-    test_output = NetworkByteOrderConverter::convert_from_network(input);
+    test_output = Net_Byte_Order_Conv::convert_from_network(input);
 
     ASSERT_EQ(output, test_output);
 }

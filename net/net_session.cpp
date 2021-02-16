@@ -69,3 +69,15 @@ void Session::process_incomming_data(std::size_t length) {
     }
     
 };
+
+Msg Session::get_next_msg(void) {
+    return in_fifo.get_element();
+}
+
+bool Session::new_message_available(void) {
+    return !in_fifo.is_fifo_empty();
+}
+
+void Session::send_msg(Msg&& msg) {
+    out_fifo.push_element(std::move(msg));
+}
