@@ -2,7 +2,6 @@
 add_library(
     net
     net_tcpip.cpp
-    net_common.cpp
     net_session.cpp
 )
 

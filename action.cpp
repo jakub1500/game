@@ -10,7 +10,7 @@ Msg Action::move(Move_Direction direction) {
     return msg; 
 }
 
-KeyStrokeEngine::KeyStrokeEngine(Session* _session) : session(_session){}
+KeyStrokeEngine::KeyStrokeEngine(Processer_Client* _processer_client) : processer_client(_processer_client){}
 
 void KeyStrokeEngine::run() {
     char c;
@@ -30,7 +30,9 @@ void KeyStrokeEngine::run() {
         } else {
             break;
         }
-        session->send_msg(std::move(msg));
 
+        // let's assume that client side can have only one session
+        Session* ses = processer_client->vec_sessions->back();
+        ses->send_msg(std::move(msg));
     }
 }

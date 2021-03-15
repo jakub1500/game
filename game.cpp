@@ -13,7 +13,7 @@ int main() {
     Processer_Client processer_client(sessions, &s);
     std::thread check_session_loop = std::thread([&]{processer_client.loop();});
     Session* ses = sessions->back();
-    KeyStrokeEngine kse(ses);
+    KeyStrokeEngine kse(&processer_client);
     kse.run();
 
     check_session_loop.join();

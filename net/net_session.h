@@ -1,6 +1,7 @@
 #pragma once
 
 #include "net_common.h"
+#include "common/fifo.h"
 #include <boost/asio.hpp>
 #include <mutex>
 #include "protocol/protocol_msg.h"
@@ -16,8 +17,10 @@ class Session {
     std::mutex dispose_next_read_locker;
     bool dispose_next_read;
     void process_incomming_data(std::size_t);
-    Fifo in_fifo;
-    Fifo out_fifo;
+    Fifo<Msg> in_fifo;
+    Fifo<Msg> out_fifo;
+    // Fifo in_fifo;
+    // Fifo out_fifo;
 
     public:
     Session(boost::asio::ip::tcp::socket);

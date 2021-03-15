@@ -1,6 +1,6 @@
 #pragma once
 
-#include "net/net_session.h"
+#include "processers/processer_game.h"
 
 class Action {
     public:
@@ -10,9 +10,9 @@ class Action {
 
 class KeyStrokeEngine {
     Action action;
-    Session* session;
+    Processer_Client* processer_client;
     public:
-    KeyStrokeEngine(Session*);
+    KeyStrokeEngine(Processer_Client*);
     void run(void);
 };
 

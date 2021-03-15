@@ -3,6 +3,7 @@
 #include <thread>
 #include "world/field.h"
 #include "net/net_common.h"
+#include "protocol/protocol_msg.h"
 
 class Board {
     unsigned int x,y;

@@ -4,7 +4,6 @@
 #include <vector>
 #include <deque>
 #include <mutex>
-#include "protocol/protocol_msg.h"
 
 enum Move_Direction : uint32_t {
     Up=0,
@@ -15,15 +14,15 @@ enum Move_Direction : uint32_t {
 
 
 
-class Fifo {
-    std::deque<Msg> _fifo;
-    std::mutex lock;
+// class Fifo {
+//     std::deque<Msg> _fifo;
+//     std::mutex lock;
 
-    public:
-    Fifo(void);
-    ~Fifo();
-    Msg get_element(void);
-    void push_element(Msg&&);
-    bool is_fifo_empty(void);
-};
+//     public:
+//     Fifo(void);
+//     ~Fifo();
+//     Msg get_element(void);
+//     void push_element(Msg&&);
+//     bool is_fifo_empty(void);
+// };
 
