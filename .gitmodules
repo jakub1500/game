@@ -1,0 +1,51 @@
+[submodule "dependencies/asio"]
+	path = dependencies/asio
+	url = https://github.com/boostorg/asio.git
+[submodule "dependencies/system"]
+	path = dependencies/system
+	url = https://github.com/boostorg/system.git
+[submodule "dependencies/config"]
+	path = dependencies/config
+	url = https://github.com/boostorg/config.git
+[submodule "dependencies/assert"]
+	path = dependencies/assert
+	url = https://github.com/boostorg/assert.git
+[submodule "dependencies/throw_exception"]
+	path = dependencies/throw_exception
+	url = https://github.com/boostorg/throw_exception.git
+[submodule "dependencies/date_time"]
+	path = dependencies/date_time
+	url = https://github.com/boostorg/date_time.git
+[submodule "dependencies/smart_ptr"]
+	path = dependencies/smart_ptr
+	url = https://github.com/boostorg/smart_ptr.git
+[submodule "dependencies/core"]
+	path = dependencies/core
+	url = https://github.com/boostorg/core.git
+[submodule "dependencies/utility"]
+	path = dependencies/utility
+	url = https://github.com/boostorg/utility.git
+[submodule "dependencies/static_assert"]
+	path = dependencies/static_assert
+	url = https://github.com/boostorg/static_assert.git
+[submodule "dependencies/type_traits"]
+	path = dependencies/type_traits
+	url = https://github.com/boostorg/type_traits.git
+[submodule "dependencies/numeric_conversion"]
+	path = dependencies/numeric_conversion
+	url = https://github.com/boostorg/numeric_conversion.git
+[submodule "dependencies/mpl"]
+	path = dependencies/mpl
+	url = https://github.com/boostorg/mpl.git
+[submodule "dependencies/preprocessor"]
+	path = dependencies/preprocessor
+	url = https://github.com/boostorg/preprocessor.git
+[submodule "dependencies/bind"]
+	path = dependencies/bind
+	url = https://github.com/boostorg/bind.git
+[submodule "dependencies/regex"]
+	path = dependencies/regex
+	url = https://github.com/boostorg/regex.git
+[submodule "dependencies/predef"]
+	path = dependencies/predef
+	url = https://github.com/boostorg/predef.git

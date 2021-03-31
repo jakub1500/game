@@ -5,4 +5,4 @@ add_library(
     net_session.cpp
 )
 
-target_compile_definitions(net PUBLIC IP=${IP} PORT=${PORT})
+target_compile_definitions(net PUBLIC IP=${IP} PORT=${PORT} )
